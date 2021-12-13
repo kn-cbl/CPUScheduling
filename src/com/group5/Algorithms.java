@@ -110,8 +110,9 @@ public class Algorithms extends Process {
         }
 
         while(completed != process.length) {
-            index = readyQueue.get(0);
-            readyQueue.remove(0);
+            //FIFO implementation
+            index = readyQueue.get(0); // get the number in front of the array list
+            readyQueue.remove(0); // remove the number in front of the array list
 
             if(systemTime == 0) {
                 burstGanttChart.add("0");
@@ -126,6 +127,7 @@ public class Algorithms extends Process {
                 systemTime += timeQuantum;
                 processBurst[index] -= timeQuantum;
             }
+
             processGanttChart.add(String.valueOf(process[index].getProcessID()));
             burstGanttChart.add(String.valueOf(systemTime));
 
@@ -163,7 +165,6 @@ public class Algorithms extends Process {
 
     public void RRO(Process[] process) {
         int[] processBurst = new int[process.length];
-
         systemTime = 0; idleTime = 0;
         totalBurst = 0;
         totalTurnaroundTime = 0; totalWaitingTime = 0;
@@ -206,8 +207,9 @@ public class Algorithms extends Process {
         }
 
         while(completed != process.length) {
-            index = readyQueue.get(0);
-            readyQueue.remove(0);
+            //FIFO implementation
+            index = readyQueue.get(0); // get the number in front of the array list
+            readyQueue.remove(0); // remove the number in front of the array list
 
             if(systemTime == 0) {
                 burstGanttChart.add("0");
@@ -222,6 +224,7 @@ public class Algorithms extends Process {
                 systemTime += timeQuantum;
                 processBurst[index] -= timeQuantum;
             }
+
             processGanttChart.add(String.valueOf(process[index].getProcessID()));
             burstGanttChart.add(String.valueOf(systemTime));
 
@@ -247,6 +250,7 @@ public class Algorithms extends Process {
                 }
             }
 
+            //add overhead time
             if(completed != process.length) {
                 systemTime += overheadTime;
                 idleTime += overheadTime;
