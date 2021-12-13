@@ -6,7 +6,6 @@ public class Process {
     private int burstTime = 0;
     private int quantumTime = 0;
     private int priority = 0;
-    private int startTime = 0;
     private int completionTime = 0;
     private int turnaroundTime = 0;
     private int waitingTime = 0;
@@ -22,13 +21,19 @@ public class Process {
         this.burstTime = burstTime;
     }
 
-    public Process(int processID, int arrivalTime, int burstTime, int quantumTime, int priority, int startTime, int completionTime, int turnaroundTime, int waitingTime, int responseTime) {
+    public Process(int processID, int arrivalTime, int burstTime, int priority) {
+        this.processID = processID;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priority = priority;
+    }
+
+    public Process(int processID, int arrivalTime, int burstTime, int quantumTime, int priority, int completionTime, int turnaroundTime, int waitingTime, int responseTime) {
         this.processID = processID;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.quantumTime = quantumTime;
         this.priority = priority;
-        this.startTime = startTime;
         this.completionTime = completionTime;
         this.turnaroundTime = turnaroundTime;
         this.waitingTime = waitingTime;

@@ -16,9 +16,7 @@ public class Main {
 	    String choice;
 	    char again = ' ';
 	    Process[] process;
-        int processes = 0;
-        int arrivalTime; // arrival time for process
-        int burstTime; // burst time for process
+        int processes;
 
         do {
             System.out.println("CPU Scheduling Algorithm" +
@@ -26,8 +24,7 @@ public class Main {
                     "\n[B] Round Robin (RR)" +
                     "\n[C] Round Robin with Overhead (RRO)" +
                     "\n[D] Preemptive Priority (P-PRIO)" +
-                    "\n[E] Multi-level Feedback Queue (MLFQ)" +
-                    "\n[F] Exit");
+                    "\n[E] Exit");
 
             System.out.print("\nChoose an algorithm: ");
             choice = input.nextLine().toUpperCase();
@@ -36,29 +33,11 @@ public class Main {
                 choice = input.nextLine().toUpperCase();
             }
 
-            /*System.out.print("\nEnter number of processes: ");
-            processes = algorithms.isIntegerAndGreaterThanZero(input); // number of processes
-
-            Process[] process = new Process[processes]; // create array of objects process based on number of processes
-
-            System.out.println("Enter arrival time and burst time for each process\n");
-            for(int i = 1; i <= processes; i++) {
-                System.out.println("Process ID: " + i);
-                System.out.print("Arrival time: ");
-                arrivalTime = algorithms.isInteger(input); // arrival time for each process
-
-                System.out.print("Burst time: ");
-                burstTime = algorithms.isIntegerAndGreaterThanZero(input); // burst time for each process
-
-                process[i - 1] = new Process(i, arrivalTime, burstTime); // create processes
-            }*/
-
             switch(choice) {
                 case "A":
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
-                    algorithms.setProcessATBT(process, processes);
-                    System.out.println();
+                    algorithms.setProcessATBT(process, processes, choice);
                     algorithms.SRTF(process);
 
                     System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
@@ -67,6 +46,7 @@ public class Main {
                     System.out.println();
                     break;
                 case "B":
+                    algorithms.RR();
                     System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
                     again = input.next().charAt(0);
                     input.nextLine();
@@ -75,7 +55,7 @@ public class Main {
                 case "C":
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
-                    algorithms.setProcessATBT(process, processes);
+                    algorithms.setProcessATBT(process, processes, choice);
                     algorithms.RRO(process);
 
                     System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
@@ -84,9 +64,10 @@ public class Main {
                     System.out.println();
                     break;
                 case "D":
+                    choice = "PPRIO";
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
-                    algorithms.setProcessATBT(process, processes);
+                    algorithms.setProcessATBT(process, processes, choice);
                     algorithms.PPRIO(process);
 
                     System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
@@ -94,9 +75,14 @@ public class Main {
                     input.nextLine();
                     System.out.println();
                     break;
+
+                    /*algorithms.PPRIO();
+                    System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
+                    again = input.next().charAt(0);
+                    input.nextLine();
+                    System.out.println();
+                    break;*/
                 case "E":
-                    break;
-                case "F":
                     again = 'n';
                     break;
                 default:
