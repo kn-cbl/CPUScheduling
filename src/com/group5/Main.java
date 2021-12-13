@@ -46,7 +46,11 @@ public class Main {
                     System.out.println();
                     break;
                 case "B":
-                    algorithms.RR();
+                    processes = algorithms.setProcesses();
+                    process = new Process[processes]; // create array of objects process based on number of processes
+                    algorithms.setProcessATBT(process, processes, choice);
+                    algorithms.RR(process);
+
                     System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
                     again = input.next().charAt(0);
                     input.nextLine();

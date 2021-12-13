@@ -4,7 +4,7 @@ public class Process {
     private int processID = 0;
     private int arrivalTime = 0;
     private int burstTime = 0;
-    private int quantumTime = 0;
+    private int timeQuantum = 0;
     private int priority = 0;
     private int completionTime = 0;
     private int turnaroundTime = 0;
@@ -28,11 +28,11 @@ public class Process {
         this.priority = priority;
     }
 
-    public Process(int processID, int arrivalTime, int burstTime, int quantumTime, int priority, int completionTime, int turnaroundTime, int waitingTime, int responseTime) {
+    public Process(int processID, int arrivalTime, int burstTime, int timeQuantum, int priority, int completionTime, int turnaroundTime, int waitingTime, int responseTime) {
         this.processID = processID;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
-        this.quantumTime = quantumTime;
+        this.timeQuantum = timeQuantum;
         this.priority = priority;
         this.completionTime = completionTime;
         this.turnaroundTime = turnaroundTime;
@@ -64,12 +64,12 @@ public class Process {
         this.burstTime = burstTime;
     }
 
-    public int getQuantumTime() {
-        return quantumTime;
+    public int getTimeQuantum() {
+        return timeQuantum;
     }
 
-    public void setQuantumTime(int quantumTime) {
-        this.quantumTime = quantumTime;
+    public void setTimeQuantum(int timeQuantum) {
+        this.timeQuantum = timeQuantum;
     }
 
     public int getPriority() {
