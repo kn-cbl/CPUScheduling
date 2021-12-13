@@ -206,9 +206,6 @@ public class Algorithms extends Process {
         }
 
         while(completed != process.length) {
-            for(int value: readyQueue) {
-                System.out.print("ready: " + value);
-            }
             index = readyQueue.get(0);
             readyQueue.remove(0);
 
