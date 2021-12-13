@@ -79,13 +79,6 @@ public class Main {
                     input.nextLine();
                     System.out.println();
                     break;
-
-                    /*algorithms.PPRIO();
-                    System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
-                    again = input.next().charAt(0);
-                    input.nextLine();
-                    System.out.println();
-                    break;*/
                 case "E":
                     again = 'n';
                     break;
