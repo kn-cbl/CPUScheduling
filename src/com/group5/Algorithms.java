@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Algorithms extends Process {
     Scanner input = new Scanner(System.in);
 
+    ArrayList<Integer> readyQueue = new ArrayList<>();
     int systemTime, idleTime;
     int totalBurst;
     float totalTurnaroundTime, totalWaitingTime;
@@ -68,6 +69,7 @@ public class Algorithms extends Process {
 
         displayAvgTATWT(avgTurnaroundTime, avgWaitingTime);
     }
+
 
     public void RR() {
         int value,tq;
@@ -143,7 +145,7 @@ public class Algorithms extends Process {
                     //Updating the ready queue until all the processes arrive
                     processArrival(timer, arrival, value, max, queue);
                 }
-                if((temp_burst[queue[0]-1] == 0) && (complete[queue[0]-1] == false)){
+                if((temp_burst[queue[0]-1] == 0) && (!complete[queue[0] - 1])){
                     //turn currently stores exit times
                     turn[queue[0]-1] = timer;
                     complete[queue[0]-1] = true;
@@ -153,7 +155,7 @@ public class Algorithms extends Process {
                 boolean idle = true;
                 if(queue[value-1] == 0){
                     for(int k = 0; k < value && queue[k] != 0; k++){
-                        if(complete[queue[k]-1] == false){
+                        if(!complete[queue[k] - 1]){
                             idle = false;
                         }
                     }
@@ -172,8 +174,7 @@ public class Algorithms extends Process {
         }
 
         //Checking Completion Time
-        for(int  i = 0 ; i < value; i++)
-        {
+        for(int  i = 0 ; i < value; i++) {
             if( i == 0)
             {
                 comp[i] = arrival[i] + burst[i];
@@ -238,8 +239,6 @@ public class Algorithms extends Process {
 
     public void RRO(Process[] process) {
         int[] processBurst = new int[process.length];
-        ArrayList<Integer> readyQueue = new ArrayList<>();
-        ArrayList<Integer> waitingQueue = new ArrayList<>();
 
         systemTime = 0; idleTime = 0;
         totalBurst = 0;
@@ -249,15 +248,17 @@ public class Algorithms extends Process {
         previousProcess = -1;
         int timeQuantum = 0;
         int overheadTime = 0;
+        int index = 0;
+        readyQueue.add(0);
 
         ArrayList<String> processGanttChart = new ArrayList<>();
         ArrayList<String> burstGanttChart = new ArrayList<>();
         Boolean[] flag = new Boolean[process.length];
 
-        System.out.print("Enter time slice: ");
+        System.out.print("\nEnter time slice: ");
         timeQuantum = isInteger(input);
 
-        System.out.print("\nEnter overhead time: ");
+        System.out.print("Enter overhead time: ");
         overheadTime = isInteger(input);
 
         //sort process by arrival time in ascending order
@@ -280,61 +281,53 @@ public class Algorithms extends Process {
             // to be used in curr_process_burst
         }
 
-        int index = 0;
-
         while(completed != process.length) {
-            for(int i = 0; i < process.length; i++) {
-                // check if there is a process that has arrived and if execution time is complete
-                if(process[i].getArrivalTime() <= systemTime && processBurst[i] > 0 && flag[i] != true) {
-                    readyQueue.add(i);
-                    flag[i] = true;
-                }
-            }
-
-            if(readyQueue.isEmpty()) {
-                for(int i = 1; i < process.length; i++) {
-                    // check if there is a process that has arrived and if execution time is complete
-                    if(process[i].getArrivalTime() <= systemTime && processBurst[i] > 0) {
-                        readyQueue.add(i);
-                        flag[i] = true;
-                    }
-                }
-            }
+            index = readyQueue.get(0);
+            readyQueue.remove(0);
 
             if(systemTime == 0) {
                 burstGanttChart.add("0");
             }
 
-            /*if(!waitingQueue.isEmpty()) {
-                readyQueue.add(waitingQueue.get(0));
-                waitingQueue.remove(0);
-                hold.remove(0);
-            }*/
-
-            if(!readyQueue.isEmpty()) {
-                index = readyQueue.get(0);
-                readyQueue.remove(0);
-
-                if(processBurst[index] - timeQuantum <= 0) {
-                    systemTime += processBurst[index];
-                    processBurst[index] = 0;
-                    setProperties(process, index);
-                    processGanttChart.add(String.valueOf(process[index].getProcessID()));
-                    burstGanttChart.add(String.valueOf(systemTime));
-                }
-                else {
-                    systemTime += timeQuantum;
-                    processBurst[index] -= timeQuantum;
-
-                    processGanttChart.add(String.valueOf(process[index].getProcessID()));
-                    burstGanttChart.add(String.valueOf(systemTime));
-                }
+            if(processBurst[index] - timeQuantum <= 0) {
+                systemTime += processBurst[index];
+                processBurst[index] = 0;
+                setProperties(process, index);
             }
             else {
-                systemTime++;
-                idleTime++;
+                systemTime += timeQuantum;
+                processBurst[index] -= timeQuantum;
+            }
+            processGanttChart.add(String.valueOf(process[index].getProcessID()));
+            burstGanttChart.add(String.valueOf(systemTime));
+
+            for(int i = 0; i < overheadTime; i++) {
+                systemTime += overheadTime;
+                idleTime += overheadTime;
                 processGanttChart.add("xx");
                 burstGanttChart.add(String.valueOf(systemTime));
+            }
+
+            for(int i = 1; i < process.length; i++) {
+                // check if there is a process that has arrived and if execution time is complete
+                if(process[i].getArrivalTime() <= systemTime && processBurst[i] > 0 && flag[i] == false) {
+                    readyQueue.add(i);
+                    flag[i] = true;
+                }
+            }
+
+            if(processBurst[index] > 0) {
+                readyQueue.add(index);
+            }
+
+            if(readyQueue.isEmpty()) {
+                for(int i = 1; i < process.length; i++) {
+                    if(processBurst[i] > 0) {
+                        readyQueue.add(i);
+                        flag[i] = true;
+                        break;
+                    }
+                }
             }
         }
 
