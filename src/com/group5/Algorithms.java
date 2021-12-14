@@ -3,6 +3,7 @@ package com.group5;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Algorithms extends Process {
     Scanner input = new Scanner(System.in);
@@ -13,7 +14,6 @@ public class Algorithms extends Process {
     float totalTurnaroundTime, totalWaitingTime;
     float avgTurnaroundTime, avgWaitingTime;
     int completed;
-    int previousProcess;
 
     public Algorithms() {
 
@@ -26,7 +26,6 @@ public class Algorithms extends Process {
         totalTurnaroundTime = 0; totalWaitingTime = 0;
         avgTurnaroundTime = 0; avgWaitingTime = 0;
         completed = 0;
-        previousProcess = 0;
 
         ArrayList<String> processGanttChart = new ArrayList<>();
         ArrayList<String> burstGanttChart = new ArrayList<>();
@@ -50,15 +49,13 @@ public class Algorithms extends Process {
             if(currentProcess != -1) {
                 executeProcess(process, processBurst, currentProcess);
                 processGanttChart.add(String.valueOf(process[currentProcess].getProcessID()));
-                burstGanttChart.add(String.valueOf(systemTime));
-                previousProcess = process[currentProcess].getProcessID();
             }
             else {
                 systemTime++;
                 idleTime++;
                 processGanttChart.add("xx");
-                burstGanttChart.add(String.valueOf(systemTime));
             }
+            burstGanttChart.add(String.valueOf(systemTime));
         }
 
         displayProcess(process);
@@ -77,7 +74,6 @@ public class Algorithms extends Process {
         totalTurnaroundTime = 0; totalWaitingTime = 0;
         avgTurnaroundTime = 0; avgWaitingTime = 0;
         completed = 0;
-        previousProcess = -1;
         int timeQuantum;
         int index;
         readyQueue.add(0);
@@ -170,7 +166,6 @@ public class Algorithms extends Process {
         totalTurnaroundTime = 0; totalWaitingTime = 0;
         avgTurnaroundTime = 0; avgWaitingTime = 0;
         completed = 0;
-        previousProcess = -1;
         int timeQuantum;
         int overheadTime;
         int index;
@@ -275,7 +270,7 @@ public class Algorithms extends Process {
         totalBurst = 0;
         totalTurnaroundTime = 0; totalWaitingTime = 0;
         avgTurnaroundTime = 0; avgWaitingTime = 0;
-        completed = 0; previousProcess = 0;
+        completed = 0;
         int priority_total = 0;
 
         ArrayList<String> processGanttChart = new ArrayList<>();
@@ -302,15 +297,13 @@ public class Algorithms extends Process {
             if(currentProcess != -1) {
                 executeProcess(process, processBurst, currentProcess);
                 processGanttChart.add(String.valueOf(process[currentProcess].getProcessID()));
-                burstGanttChart.add(String.valueOf(systemTime));
-                previousProcess = process[currentProcess].getProcessID();
             }
             else {
                 systemTime++;
                 idleTime++;
                 processGanttChart.add("xx");
-                burstGanttChart.add(String.valueOf(systemTime));
             }
+            burstGanttChart.add(String.valueOf(systemTime));
         }
 
         displayProcess(process);

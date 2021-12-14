@@ -14,7 +14,7 @@ public class Main {
 
         Algorithms algorithms = new Algorithms();
 	    String choice;
-	    char again = ' ';
+	    char again = 'Y';
 	    Process[] process;
         int processes;
 
@@ -34,58 +34,50 @@ public class Main {
             }
 
             switch(choice) {
-                case "A":
+                case "A" -> {
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
                     algorithms.setProcessATBT(process, processes, choice);
                     algorithms.SRTF(process);
 
-                    System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
-                    again = input.next().charAt(0);
-                    input.nextLine();
-                    System.out.println();
-                    break;
-                case "B":
+
+                }
+                case "B" -> {
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
                     algorithms.setProcessATBT(process, processes, choice);
                     algorithms.RR(process);
 
-                    System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
-                    again = input.next().charAt(0);
-                    input.nextLine();
-                    System.out.println();
-                    break;
-                case "C":
+                }
+                case "C" -> {
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
                     algorithms.setProcessATBT(process, processes, choice);
                     algorithms.RRO(process);
 
-                    System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
-                    again = input.next().charAt(0);
-                    input.nextLine();
-                    System.out.println();
-                    break;
-                case "D":
+                }
+                case "D" -> {
                     choice = "PPRIO";
                     processes = algorithms.setProcesses();
                     process = new Process[processes]; // create array of objects process based on number of processes
                     algorithms.setProcessATBT(process, processes, choice);
                     algorithms.PPRIO(process);
-
-                    System.out.print("\nDo you want to try again?\nEnter Y/y to try again: ");
+                }
+                case "E" -> again ='n';
+            }
+            if(again == 'Y') {
+                System.out.print("\nDo you want to try again? [Y/N]: ");
+                again = input.next().charAt(0);
+                again = Character.toUpperCase(again);
+                input.nextLine();
+                while(again != 'Y' && again != 'N') {
+                    System.out.print("Incorrect input, enter Y/N: ");
                     again = input.next().charAt(0);
-                    input.nextLine();
-                    System.out.println();
-                    break;
-                case "E":
-                    again = 'n';
-                    break;
-                default:
-                    break;
+                    again = Character.toUpperCase(again);
+                }
+                System.out.println();
             }
         }
-        while(again == 'Y' || again == 'y');
+        while(again == 'Y');
     }
 }
