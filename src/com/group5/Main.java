@@ -28,7 +28,7 @@ public class Main {
 
             System.out.print("\nChoose an algorithm: ");
             choice = input.nextLine().toUpperCase();
-            while (!Pattern.matches("[ABCDEF]", choice)) { // input error checking
+            while (!Pattern.matches("[ABCDE]", choice)) { // input error checking
                 System.out.print("Incorrect input, please try again: ");
                 choice = input.nextLine().toUpperCase();
             }
@@ -39,7 +39,6 @@ public class Main {
                     process = new Process[processes]; // create array of objects process based on number of processes
                     algorithms.setProcessATBT(process, processes, choice);
                     algorithms.SRTF(process);
-
 
                 }
                 case "B" -> {

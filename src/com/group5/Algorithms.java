@@ -3,7 +3,6 @@ package com.group5;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Algorithms extends Process {
     Scanner input = new Scanner(System.in);
